@@ -1,7 +1,7 @@
 const fs = require("fs");
 const process = require("process");
 const path = require("path");
-let txt = fs.createReadStream(path.join(__dirname, "text.txt"), "utf-8");
+const txt = fs.createReadStream(path.join(__dirname, "text.txt"), "utf-8");
 txt.on("data", (chunk) => {
   process.stdout.write(chunk);
 });
