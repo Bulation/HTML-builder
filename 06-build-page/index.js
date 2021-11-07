@@ -24,23 +24,32 @@ async function createComponentsPromises(componentsFolder) {
     return new Promise((res, rej) => {
         fs.promises.readdir(componentsFolder).then((components) => {
             for (let component of components) {
-              componentsArr.push(new Promise((res, rej) => {
-                  let componentReadStream = fs.createReadStream(path.join(componentsFolder, component), "utf-8");
-                  let data = "";
-                  componentReadStream.on("data", (chunk) => {
-                    data += chunk;
-                  });
-                  componentReadStream.on("end", () => {
-                    let componentObj = {};
-                    let name = path.basename(component, path.extname(component))
-                    componentObj[name] = data;
-                    res(componentObj);
-                  });
-                  componentReadStream.on("error", (err) => {
-                    rej(err);
-                  });
-                })
-              );
+                if (path.extname(component) == ".html") {
+                    componentsArr.push(
+                      new Promise((res, rej) => {
+                        let componentReadStream = fs.createReadStream(
+                          path.join(componentsFolder, component),
+                          "utf-8"
+                        );
+                        let data = "";
+                        componentReadStream.on("data", (chunk) => {
+                          data += chunk;
+                        });
+                        componentReadStream.on("end", () => {
+                          let componentObj = {};
+                          let name = path.basename(
+                            component,
+                            path.extname(component)
+                          );
+                          componentObj[name] = data;
+                          res(componentObj);
+                        });
+                        componentReadStream.on("error", (err) => {
+                          rej(err);
+                        });
+                      })
+                    );
+                }
             }
             res(Promise.all(componentsArr));
         });
