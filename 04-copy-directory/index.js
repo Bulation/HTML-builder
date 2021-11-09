@@ -9,13 +9,17 @@ async function copyFolderUnlink(folder, pathToCopyFolder) {
     fs.promises.readdir(pathToCopyFolder).then((arr) => {
         arr.map(async (el) => {
             let stat = await fs.promises.stat(path.join(pathToCopyFolder, el));
-            if (!pathToFolder.includes(el))
+            if (!pathToFolder.includes(el) && !stat.isDirectory())
                 fs.promises.unlink(path.join(pathToCopyFolder, el));
-            else if (stat.isDirectory()) {
+            else if (stat.isDirectory() && pathToFolder.includes(el)) {
               copyFolderUnlink(
                 path.join(folder, el),
                 path.join(pathToCopyFolder, el)
               );
+            } else if (!pathToFolder.includes(el) && stat.isDirectory()) {
+              fs.promises.rm(path.join(pathToCopyFolder, el), {
+                recursive: true,
+              });
             }
         });
     });
