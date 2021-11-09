@@ -59,7 +59,7 @@ async function createComponentsPromises(componentsFolder) {
 createComponentsPromises(path.join(__dirname, "components")).then((componentsArr) => {
     for (let component of componentsArr) {
       for (let tag in component) {
-        template = template.replace(`{{${tag}}}`, component[tag]);
+        template = template.replaceAll(`{{${tag}}}`, component[tag]);
       }
     }
 }).then(() => {
