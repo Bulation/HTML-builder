@@ -1,7 +1,5 @@
 const fs = require("fs");
 const path = require("path");
-const createBundle = require("../05-merge-styles/index.js");
-const { copyFolder, copyFolderUnlink } = require("../04-copy-directory/index.js");
 
 const pathToDist = path.join(__dirname, "project-dist");
 fs.promises.mkdir(pathToDist, { recursive: true });
