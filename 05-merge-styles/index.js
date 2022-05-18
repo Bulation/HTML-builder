@@ -23,5 +23,4 @@ createBundle(pathToStyleFolder, bundle).catch((err) =>
   console.error("error: ", err)
 );
 
-module.exports = createBundle;
 

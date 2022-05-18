@@ -52,8 +52,3 @@ async function copyFolder(folder, pathToCopyFolder) {
 copyFolder(path.join(__dirname, "files"), pathToCopyFolder).catch((err) =>
   console.error("error: ", err)
 );
-
-module.exports = {
-  copyFolder: copyFolder,
-  copyFolderUnlink: copyFolderUnlink,
-}; 
